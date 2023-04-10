@@ -30,7 +30,13 @@ spring:
         - Path=/book/**
         filters:
         - RewritePath=/book/(?<path>.*), /$\{path}
-
+      - id: jim-service
+        uri: lb://book-service
+        predicates:
+        - Path=/jim/**
+        filters:
+        - RewritePath=/jim/(?<path>.*), /$\{path}
+        
 management:
   endpoints:
     web:
