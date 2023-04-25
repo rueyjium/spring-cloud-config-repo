@@ -9,34 +9,28 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://eurekaserver:8070/eureka/
-
+      
 spring:
   cloud:
     loadbalancer.ribbon.enabled: false
     gateway:
-      discovery.locator:
-        enabled: true
-        lowerCaseServiceId: true 
-      routes:
-      - id: author-service
-        uri: lb://author-service
-        predicates:
-        - Path=/author/**
-        filters:
-        - RewritePath=/author/(?<path>.*), /$\{path}
-      - id: book-service
-        uri: lb://book-service
-        predicates:
-        - Path=/book/**
-        filters:
-        - RewritePath=/book/(?<path>.*), /$\{path}
-      - id: jim-service
-        uri: lb://book-service
-        predicates:
-        - Path=/jim/**
-        filters:
-        - RewritePath=/jim/(?<path>.*), /$\{path}
-        
+        routes:
+        - id: author-service
+          uri: lb://author-service
+          predicates:
+          - Path=/author/**
+          filters:
+          - RewritePath=/author/(?<path>.*), /$\{path}
+          - RemoveRequestHeader= Cookie,Set-Cookie
+        - id: book-service
+          uri: lb://book-service
+          predicates:
+          - Path=/book/**
+          filters:
+          - RewritePath=/book/(?<path>.*), /$\{path}
+          - RemoveRequestHeader= Cookie,Set-Cookie
+   
+    
 management:
   endpoints:
     web:
