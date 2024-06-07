@@ -1,2 +1,2 @@
 line:
-  greeting: "Welcome to the production catalog from the config server"
+  greeting: "Welcome to the book catalog from a remote-PROD config server!"
